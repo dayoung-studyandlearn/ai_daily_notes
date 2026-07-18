@@ -12,6 +12,9 @@ on:
         description: "같은 날짜의 노트가 있어도 덮어쓸지"
         type: boolean
         default: false
+      topic:
+        description: "주제 직접 지정 (비워두면 topics.txt 맨 위 줄을 사용, 소비하지 않음)"
+        required: false
 
 permissions:
   contents: write
@@ -39,11 +42,13 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           NOTE_DATE: ${{ github.event.inputs.date }}
           FORCE: ${{ github.event.inputs.force }}
+          NOTE_TOPIC: ${{ github.event.inputs.topic }}
         run: |
-          ARGS=""
-          if [ -n "$NOTE_DATE" ]; then ARGS="$ARGS --date $NOTE_DATE"; fi
-          if [ "$FORCE" = "true" ]; then ARGS="$ARGS --force"; fi
-          ai-daily-notes $ARGS
+          ARGS=()
+          if [ -n "$NOTE_DATE" ]; then ARGS+=(--date "$NOTE_DATE"); fi
+          if [ "$FORCE" = "true" ]; then ARGS+=(--force); fi
+          if [ -n "$NOTE_TOPIC" ]; then ARGS+=("$NOTE_TOPIC"); fi
+          ai-daily-notes "${ARGS[@]}"
 
       - name: 커밋 및 푸시
         run: |
