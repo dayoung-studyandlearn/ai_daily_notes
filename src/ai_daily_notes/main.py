@@ -3,12 +3,18 @@ from datetime import date
 
 from ai_daily_notes.assembler import assemble_note
 from ai_daily_notes.collectors.rss import fetch_news
-from ai_daily_notes.config import get_notion_api_key, get_notion_database_id
+from ai_daily_notes.config import (
+    get_discord_webhook_url,
+    get_notion_api_key,
+    get_notion_database_id,
+)
+from ai_daily_notes.publishers.discord import notify_note
 from ai_daily_notes.publishers.notion import publish_note
 from ai_daily_notes.topics import peek_upcoming, pop_next_topic
 from ai_daily_notes.writer import note_path_for, save_note
 
 DEFAULT_FEED_URL = "https://www.artificialintelligence-news.com/feed/"
+GITHUB_REPO_URL = "https://github.com/dayoung-studyandlearn/ai_daily_notes"
 
 
 def main() -> None:
@@ -67,13 +73,24 @@ def main() -> None:
     path = save_note(note, overwrite=args.force)
     print(f"오늘의 노트를 저장했습니다: {path}")
 
+    note_url = f"{GITHUB_REPO_URL}/blob/main/notes/{target_date.isoformat()}.md"
+
     if get_notion_api_key() and get_notion_database_id():
-        notion_url = publish_note(note)
-        print(f"Notion에도 등록했습니다: {notion_url}")
+        note_url = publish_note(note)
+        print(f"Notion에도 등록했습니다: {note_url}")
     else:
         print(
             "Notion 연동이 설정되어 있지 않아 건너뜁니다. "
             "(.env에 NOTION_API_KEY, NOTION_DATABASE_ID를 추가하면 활성화됩니다)"
+        )
+
+    if get_discord_webhook_url():
+        notify_note(note, note_url)
+        print("Discord에도 알림을 보냈습니다.")
+    else:
+        print(
+            "Discord 연동이 설정되어 있지 않아 건너뜁니다. "
+            "(.env에 DISCORD_WEBHOOK_URL을 추가하면 활성화됩니다)"
         )
 
 

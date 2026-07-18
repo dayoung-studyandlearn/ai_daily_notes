@@ -22,3 +22,8 @@ def get_notion_api_key() -> str | None:
 
 def get_notion_database_id() -> str | None:
     return os.environ.get("NOTION_DATABASE_ID") or None
+
+
+def get_discord_webhook_url() -> str | None:
+    """Discord 알림도 선택적 연동이라, 없으면 에러 대신 None을 돌려준다."""
+    return os.environ.get("DISCORD_WEBHOOK_URL") or None
