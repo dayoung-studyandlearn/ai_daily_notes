@@ -1,0 +1,37 @@
+name: Generate Daily AI Note
+
+on:
+  schedule:
+    - cron: "0 22 * * *" # 매일 UTC 22:00 = 한국시간(KST) 오전 7:00
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  generate-note:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Seoul
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 의존성 설치
+        run: pip install -e .
+
+      - name: 오늘의 노트 생성
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: ai-daily-notes
+
+      - name: 커밋 및 푸시
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add notes/ topics.txt
+          git diff --cached --quiet || git commit -m "[ai_daily_notes] Auto-generate daily note"
+          git push
