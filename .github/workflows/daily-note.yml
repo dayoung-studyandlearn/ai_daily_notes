@@ -34,6 +34,8 @@ jobs:
       - name: 오늘의 노트 생성
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
           NOTE_DATE: ${{ github.event.inputs.date }}
           FORCE: ${{ github.event.inputs.force }}
         run: |

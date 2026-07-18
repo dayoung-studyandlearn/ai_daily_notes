@@ -3,6 +3,8 @@ from datetime import date
 
 from ai_daily_notes.assembler import assemble_note
 from ai_daily_notes.collectors.rss import fetch_news
+from ai_daily_notes.config import get_notion_api_key, get_notion_database_id
+from ai_daily_notes.publishers.notion import publish_note
 from ai_daily_notes.topics import peek_upcoming, pop_next_topic
 from ai_daily_notes.writer import note_path_for, save_note
 
@@ -64,6 +66,15 @@ def main() -> None:
     )
     path = save_note(note, overwrite=args.force)
     print(f"오늘의 노트를 저장했습니다: {path}")
+
+    if get_notion_api_key() and get_notion_database_id():
+        notion_url = publish_note(note)
+        print(f"Notion에도 등록했습니다: {notion_url}")
+    else:
+        print(
+            "Notion 연동이 설정되어 있지 않아 건너뜁니다. "
+            "(.env에 NOTION_API_KEY, NOTION_DATABASE_ID를 추가하면 활성화됩니다)"
+        )
 
 
 if __name__ == "__main__":
