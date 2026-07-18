@@ -1,8 +1,13 @@
+from datetime import date
 from pathlib import Path
 
 from ai_daily_notes.models import DailyNote
 
 NOTES_DIR = Path(__file__).resolve().parent.parent.parent / "notes"
+
+
+def note_path_for(note_date: date) -> Path:
+    return NOTES_DIR / f"{note_date.isoformat()}.md"
 
 
 def render_markdown(note: DailyNote) -> str:
@@ -42,8 +47,12 @@ def render_markdown(note: DailyNote) -> str:
     return "\n".join(lines) + "\n"
 
 
-def save_note(note: DailyNote) -> Path:
+def save_note(note: DailyNote, overwrite: bool = False) -> Path:
     NOTES_DIR.mkdir(exist_ok=True)
-    path = NOTES_DIR / f"{note.note_date.isoformat()}.md"
+    path = note_path_for(note.note_date)
+    if path.exists() and not overwrite:
+        raise FileExistsError(
+            f"{path.name}가 이미 있습니다. 덮어쓰려면 overwrite=True로 호출하세요."
+        )
     path.write_text(render_markdown(note), encoding="utf-8")
     return path

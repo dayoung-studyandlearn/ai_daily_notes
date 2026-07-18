@@ -1,5 +1,8 @@
 from datetime import date
 
+import pytest
+
+from ai_daily_notes import writer
 from ai_daily_notes.models import CodeExample, Concept, DailyNote, NewsItem, Quiz, Term
 from ai_daily_notes.writer import render_markdown
 
@@ -34,3 +37,23 @@ def test_render_markdown_starts_with_date_heading():
     markdown = render_markdown(note)
 
     assert markdown.startswith("# 2026-07-18")
+
+
+def test_save_note_refuses_to_overwrite_by_default(tmp_path, monkeypatch):
+    monkeypatch.setattr(writer, "NOTES_DIR", tmp_path)
+    note = _make_sample_note()
+
+    writer.save_note(note)
+
+    with pytest.raises(FileExistsError):
+        writer.save_note(note)
+
+
+def test_save_note_overwrites_when_explicitly_asked(tmp_path, monkeypatch):
+    monkeypatch.setattr(writer, "NOTES_DIR", tmp_path)
+    note = _make_sample_note()
+
+    writer.save_note(note)
+    path = writer.save_note(note, overwrite=True)
+
+    assert path.exists()

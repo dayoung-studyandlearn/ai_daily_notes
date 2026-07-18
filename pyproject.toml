@@ -10,12 +10,16 @@ requires-python = ">=3.11"
 dependencies = [
     "anthropic>=0.40.0",
     "python-dotenv>=1.0.0",
+    "feedparser>=6.0.0",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0.0",
 ]
+
+[project.scripts]
+ai-daily-notes = "ai_daily_notes.main:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/ai_daily_notes"]
