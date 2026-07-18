@@ -3,7 +3,15 @@ name: Generate Daily AI Note
 on:
   schedule:
     - cron: "0 22 * * *" # 매일 UTC 22:00 = 한국시간(KST) 오전 7:00
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "노트 날짜 (YYYY-MM-DD). 비워두면 오늘 날짜를 씁니다."
+        required: false
+      force:
+        description: "같은 날짜의 노트가 있어도 덮어쓸지"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -26,7 +34,13 @@ jobs:
       - name: 오늘의 노트 생성
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: ai-daily-notes
+          NOTE_DATE: ${{ github.event.inputs.date }}
+          FORCE: ${{ github.event.inputs.force }}
+        run: |
+          ARGS=""
+          if [ -n "$NOTE_DATE" ]; then ARGS="$ARGS --date $NOTE_DATE"; fi
+          if [ "$FORCE" = "true" ]; then ARGS="$ARGS --force"; fi
+          ai-daily-notes $ARGS
 
       - name: 커밋 및 푸시
         run: |
