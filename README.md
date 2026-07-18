@@ -18,14 +18,18 @@ src/ai_daily_notes/
 ├── generators/       # LLM으로 콘텐츠 생성
 ├── assembler.py     # 조각들을 하나의 노트로 조립
 └── writer.py         # Markdown 파일로 저장
+
+notes/       # 매일 생성되는 노트 (git에는 올라가지 않음)
+practice/    # 배운 내용을 직접 코드로 연습하는 공간 (git으로 추적)
 ```
 
 ## 현재 진행 상황
 
 - [x] 프로젝트 뼈대 세팅
-- [ ] 노트 데이터 모델 정의
-- [ ] Claude API로 콘텐츠 생성
-- [ ] Markdown 조립 및 저장
-- [ ] 테스트 코드
+- [x] 노트 데이터 모델 정의
+- [x] Markdown 조립 및 저장
+- [x] 테스트 코드 (writer.py)
+- [x] 실습 공간(practice/) 마련
+- [ ] Claude API로 콘텐츠 생성 (API 키 결제 등록 대기 중)
 - [ ] 뉴스 수집(RSS) 연동
 - [ ] 자동화(GitHub Actions)
