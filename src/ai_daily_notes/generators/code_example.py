@@ -1,6 +1,7 @@
 from anthropic import Anthropic
 
 from ai_daily_notes.config import get_anthropic_api_key
+from ai_daily_notes.generators import BEGINNER_AUDIENCE
 from ai_daily_notes.models import CodeExample
 
 _MODEL = "claude-sonnet-5"
@@ -35,8 +36,9 @@ def generate_code_example(topic: str) -> CodeExample:
             {
                 "role": "user",
                 "content": (
-                    f"AI를 공부하는 입문자를 위해 '{topic}'과 관련된 짧은 파이썬 예제 코드를 "
-                    "하나 만들어줘. 20줄을 넘지 않게, 한 줄씩 이해할 수 있도록 주석을 달아줘."
+                    f"{BEGINNER_AUDIENCE} 이런 사람을 위해 '{topic}'과 관련된 아주 짧은 "
+                    "파이썬 예제 코드를 하나 만들어줘. 20줄을 넘지 않게, 한 줄씩 무엇을 "
+                    "하는지 주석으로 설명해줘. 파이썬 문법 자체가 낯설 수 있다는 것도 감안해줘."
                 ),
             }
         ],

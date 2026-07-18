@@ -1,6 +1,7 @@
 from anthropic import Anthropic
 
 from ai_daily_notes.config import get_anthropic_api_key
+from ai_daily_notes.generators import BEGINNER_AUDIENCE
 from ai_daily_notes.models import Concept
 
 _MODEL = "claude-sonnet-5"
@@ -14,7 +15,7 @@ _SUBMIT_CONCEPT_TOOL = {
             "title": {"type": "string", "description": "개념 이름"},
             "explanation": {
                 "type": "string",
-                "description": "AI 입문자도 이해할 수 있는 3~5문장 설명",
+                "description": "완전 초보자도 이해할 수 있는 3~5문장 설명. 전문 용어는 풀어서 설명",
             },
         },
         "required": ["title", "explanation"],
@@ -34,9 +35,8 @@ def generate_concept(topic: str) -> Concept:
             {
                 "role": "user",
                 "content": (
-                    f"AI를 공부하는 사람을 위해 '{topic}'과 관련된 오늘의 개념을 "
-                    "하나 골라 설명해줘. 전문 용어를 남발하지 말고, 입문자가 "
-                    "이해할 수 있는 눈높이로 써줘."
+                    f"{BEGINNER_AUDIENCE} 이런 사람을 위해 '{topic}'과 관련된 "
+                    "오늘의 개념을 하나 골라 설명해줘."
                 ),
             }
         ],

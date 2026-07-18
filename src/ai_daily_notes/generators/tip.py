@@ -1,6 +1,7 @@
 from anthropic import Anthropic
 
 from ai_daily_notes.config import get_anthropic_api_key
+from ai_daily_notes.generators import BEGINNER_AUDIENCE
 
 _MODEL = "claude-sonnet-5"
 
@@ -32,8 +33,9 @@ def generate_tip(topic: str) -> str:
             {
                 "role": "user",
                 "content": (
-                    f"AI를 공부하는 사람을 위해 '{topic}'과 관련된 실무 팁을 하나 알려줘. "
-                    "바로 적용할 수 있을 만큼 구체적인 조언으로."
+                    f"{BEGINNER_AUDIENCE} 이런 사람을 위해 '{topic}'과 관련해서 "
+                    "실제로 도움이 될 팁을 하나 알려줘. 막연한 조언 말고, "
+                    "바로 적용해볼 수 있을 만큼 구체적으로."
                 ),
             }
         ],

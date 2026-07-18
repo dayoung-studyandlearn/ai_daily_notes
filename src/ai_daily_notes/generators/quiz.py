@@ -1,6 +1,7 @@
 from anthropic import Anthropic
 
 from ai_daily_notes.config import get_anthropic_api_key
+from ai_daily_notes.generators import BEGINNER_AUDIENCE
 from ai_daily_notes.models import Quiz
 
 _MODEL = "claude-sonnet-5"
@@ -37,8 +38,9 @@ def generate_quiz(topic: str) -> Quiz:
             {
                 "role": "user",
                 "content": (
-                    f"AI 입문자가 '{topic}'을 제대로 이해했는지 확인할 수 있는 "
-                    "퀴즈 질문과 답을 하나 만들어줘. 암기보다는 개념 이해를 확인하는 질문으로."
+                    f"{BEGINNER_AUDIENCE} 이런 사람이 '{topic}'을 제대로 이해했는지 "
+                    "확인할 수 있는 퀴즈 질문과 답을 하나 만들어줘. 암기보다는 "
+                    "개념 이해를 확인하는 질문으로, 답도 완전 초보자가 이해할 수 있게 써줘."
                 ),
             }
         ],
