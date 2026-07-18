@@ -8,6 +8,7 @@ from ai_daily_notes.config import (
     get_notion_api_key,
     get_notion_database_id,
 )
+from ai_daily_notes.generators.news_translator import translate_news
 from ai_daily_notes.publishers.discord import notify_note
 from ai_daily_notes.publishers.notion import publish_note
 from ai_daily_notes.topics import peek_upcoming, pop_next_topic
@@ -64,6 +65,7 @@ def main() -> None:
         raise SystemExit("topics.txt에 학습 주제가 없습니다. 한 줄씩 추가해주세요.")
 
     news = fetch_news(args.feed_url, limit=3)
+    news = translate_news(news)
     note = assemble_note(
         topic=topic,
         tomorrow_topics=tuple(args.tomorrow) or peek_upcoming(2) or ("topics.txt에 새 주제를 추가해주세요",),
