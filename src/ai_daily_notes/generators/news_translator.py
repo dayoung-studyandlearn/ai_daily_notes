@@ -48,7 +48,11 @@ def _apply_translations(items: tuple[NewsItem, ...], translations: list[dict]) -
         )
 
     return tuple(
-        NewsItem(title=t["title"], url=item.url, summary=t["summary"])
+        NewsItem(
+            title=t["title"],
+            url=item.url,
+            summary=f"{t['summary']} (원문: {item.title} — {item.summary})",
+        )
         for item, t in zip(items, translations)
     )
 

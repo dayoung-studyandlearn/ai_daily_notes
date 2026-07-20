@@ -4,7 +4,7 @@ from ai_daily_notes.generators.news_translator import _apply_translations
 from ai_daily_notes.models import NewsItem
 
 
-def test_apply_translations_keeps_original_url_and_swaps_text():
+def test_apply_translations_keeps_original_url_and_uses_translated_title():
     items = (
         NewsItem("English title", "https://example.com/1", "English summary"),
     )
@@ -13,8 +13,20 @@ def test_apply_translations_keeps_original_url_and_swaps_text():
     result = _apply_translations(items, translations)
 
     assert result[0].title == "한글 제목"
-    assert result[0].summary == "한글 요약"
     assert result[0].url == "https://example.com/1"
+
+
+def test_apply_translations_keeps_original_text_alongside_translation():
+    items = (
+        NewsItem("English title", "https://example.com/1", "English summary"),
+    )
+    translations = [{"title": "한글 제목", "summary": "한글 요약"}]
+
+    result = _apply_translations(items, translations)
+
+    assert "한글 요약" in result[0].summary
+    assert "English title" in result[0].summary
+    assert "English summary" in result[0].summary
 
 
 def test_apply_translations_raises_on_count_mismatch():
