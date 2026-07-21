@@ -29,7 +29,7 @@ def generate_code_example(topic: str) -> CodeExample:
 
     response = client.messages.create(
         model=_MODEL,
-        max_tokens=1024,
+        max_tokens=2048,
         tools=[_SUBMIT_CODE_EXAMPLE_TOOL],
         tool_choice={"type": "tool", "name": "submit_code_example"},
         messages=[
