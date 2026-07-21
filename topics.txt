@@ -1,11 +1,31 @@
-신경망(뉴럴 네트워크)이란 무엇인가
-딥러닝이란 무엇인가
+인공지능 안에서 머신러닝, 딥러닝, LLM은 어떻게 다른가
+LLM은 어떻게 다음 단어를 예측하는가 (자기회귀 생성)
 토큰(Token)이란 무엇인가
+sLLM(소형 언어모델)이란 무엇인가
+Transformer란 무엇인가
+Self-Attention이 문맥을 이해하는 원리
+LangChain이란 무엇인가
 프롬프트(Prompt)란 무엇이고 왜 중요한가
-파라미터(Parameter)란 무엇인가
-학습(Training)과 추론(Inference)의 차이
-환각(Hallucination)이란 무엇인가 - AI가 틀린 답을 하는 이유
-AI를 쓸 때 조심해야 할 점 (한계와 윤리)
-LLM의 컨텍스트 윈도우란
-프롬프트 엔지니어링 기초
-Few-shot 프롬프팅이란
+temperature 값은 답변에 어떤 영향을 주는가
+Ollama로 로컬 컴퓨터에서 LLM 실행하기
+양자화(Quantization)란 무엇인가
+벡터 데이터베이스란 무엇인가
+RAG(검색 증강 생성)란 무엇인가
+코사인 유사도란 무엇인가
+GPU는 왜 AI 연산에 유리한가
+KV 캐시란 무엇인가
+vLLM과 PagedAttention이란
+하이브리드 검색이란 무엇인가
+Re-ranking(재순위화)이란 무엇인가
+파인튜닝(Fine-tuning)이란 무엇인가
+SFT(지도 미세조정)란 무엇인가
+손실 함수(Loss Function)란 무엇인가
+LoRA란 무엇인가
+PEFT란 무엇인가
+Tool Calling(도구 호출)이란 무엇인가
+AI 에이전트(Agent)란 무엇인가
+RLHF(인간 피드백 기반 강화학습)란 무엇인가
+DPO(직접 선호도 최적화)란 무엇인가
+Chain-of-Thought(사고의 연쇄)란 무엇인가
+LLM 서비스는 어떻게 배포하는가
+LLM 성능은 어떻게 평가하는가
