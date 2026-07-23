@@ -1,4 +1,3 @@
-토큰(Token)이란 무엇인가
 sLLM(소형 언어모델)이란 무엇인가
 Transformer란 무엇인가
 Self-Attention이 문맥을 이해하는 원리
