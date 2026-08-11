@@ -1,4 +1,3 @@
-손실 함수(Loss Function)란 무엇인가
 LoRA란 무엇인가
 PEFT란 무엇인가
 Tool Calling(도구 호출)이란 무엇인가
