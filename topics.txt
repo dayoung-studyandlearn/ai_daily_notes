@@ -1,4 +1,3 @@
-PEFT란 무엇인가
 Tool Calling(도구 호출)이란 무엇인가
 AI 에이전트(Agent)란 무엇인가
 RLHF(인간 피드백 기반 강화학습)란 무엇인가
